@@ -24,6 +24,7 @@ Makefile
 .vscode/
 *.swp
 *.swo
+*codex
 
 # OS files
 .DS_Store

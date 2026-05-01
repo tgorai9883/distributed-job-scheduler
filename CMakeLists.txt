@@ -5,9 +5,12 @@ project(distributed-job-scheduler
     LANGUAGES CXX
 )
 
-add_library(scheduler_core INTERFACE)
-target_compile_features(scheduler_core INTERFACE cxx_std_20)
-target_include_directories(scheduler_core INTERFACE
+add_library(scheduler_core
+    src/core/Job.cpp
+    src/core/Task.cpp
+)
+target_compile_features(scheduler_core PUBLIC cxx_std_20)
+target_include_directories(scheduler_core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
