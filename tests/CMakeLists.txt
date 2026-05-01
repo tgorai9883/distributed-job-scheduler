@@ -1,0 +1,4 @@
+add_executable(test_blocking_queue test_blocking_queue.cpp)
+target_link_libraries(test_blocking_queue PRIVATE scheduler_core)
+
+add_test(NAME BlockingQueueTests COMMAND test_blocking_queue)

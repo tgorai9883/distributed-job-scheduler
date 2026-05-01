@@ -19,3 +19,4 @@ add_executable(scheduler_app app/main.cpp)
 target_link_libraries(scheduler_app PRIVATE scheduler_core)
 
 enable_testing()
+add_subdirectory(tests)
