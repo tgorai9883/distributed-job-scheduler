@@ -8,6 +8,7 @@ project(distributed-job-scheduler
 add_library(scheduler_core
     src/core/Job.cpp
     src/core/Task.cpp
+    src/concurrency/ThreadPool.cpp
     src/storage/InMemoryJobRepository.cpp
 )
 target_compile_features(scheduler_core PUBLIC cxx_std_20)

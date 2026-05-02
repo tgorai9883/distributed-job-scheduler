@@ -2,3 +2,8 @@ add_executable(test_blocking_queue test_blocking_queue.cpp)
 target_link_libraries(test_blocking_queue PRIVATE scheduler_core)
 
 add_test(NAME BlockingQueueTests COMMAND test_blocking_queue)
+
+add_executable(test_thread_pool test_thread_pool.cpp)
+target_link_libraries(test_thread_pool PRIVATE scheduler_core)
+
+add_test(NAME ThreadPoolTests COMMAND test_thread_pool)
