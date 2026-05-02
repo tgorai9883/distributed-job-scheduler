@@ -7,3 +7,8 @@ add_executable(test_thread_pool test_thread_pool.cpp)
 target_link_libraries(test_thread_pool PRIVATE scheduler_core)
 
 add_test(NAME ThreadPoolTests COMMAND test_thread_pool)
+
+add_executable(test_dependency_graph test_dependency_graph.cpp)
+target_link_libraries(test_dependency_graph PRIVATE scheduler_core)
+
+add_test(NAME DependencyGraphTests COMMAND test_dependency_graph)
