@@ -12,3 +12,8 @@ add_executable(test_dependency_graph test_dependency_graph.cpp)
 target_link_libraries(test_dependency_graph PRIVATE scheduler_core)
 
 add_test(NAME DependencyGraphTests COMMAND test_dependency_graph)
+
+add_executable(test_job_scheduler test_job_scheduler.cpp)
+target_link_libraries(test_job_scheduler PRIVATE scheduler_core)
+
+add_test(NAME JobSchedulerTests COMMAND test_job_scheduler)
