@@ -22,5 +22,14 @@ target_include_directories(scheduler_core PUBLIC
 add_executable(scheduler_app app/main.cpp)
 target_link_libraries(scheduler_app PRIVATE scheduler_core)
 
+add_executable(example_simple_job examples/simple_job.cpp)
+target_link_libraries(example_simple_job PRIVATE scheduler_core)
+
+add_executable(example_dependent_tasks examples/dependent_tasks.cpp)
+target_link_libraries(example_dependent_tasks PRIVATE scheduler_core)
+
+add_executable(example_failure_handling examples/failure_handling.cpp)
+target_link_libraries(example_failure_handling PRIVATE scheduler_core)
+
 enable_testing()
 add_subdirectory(tests)
