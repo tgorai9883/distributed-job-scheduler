@@ -1,5 +1,6 @@
 #include "scheduler/core/Job.hpp"
 
+#include <stdexcept>
 #include <utility>
 
 namespace scheduler::core {
@@ -33,7 +34,12 @@ void Job::setStatus(JobStatus status)
 
 void Job::addTask(Task task)
 {
-    tasks_.insert_or_assign(task.id(), std::move(task));
+    const auto taskId = task.id();
+    if (tasks_.contains(taskId)) {
+        throw std::runtime_error("duplicate task id");
+    }
+
+    tasks_.emplace(taskId, std::move(task));
 }
 
 Task* Job::getTask(TaskId taskId)

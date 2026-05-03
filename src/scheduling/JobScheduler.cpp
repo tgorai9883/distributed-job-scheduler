@@ -1,6 +1,7 @@
 #include "scheduler/scheduling/JobScheduler.hpp"
 
 #include <stdexcept>
+#include <unordered_set>
 #include <utility>
 
 namespace scheduler::scheduling {
@@ -42,9 +43,24 @@ void JobScheduler::submitJob(core::Job job)
     repository_->saveJob(job);
 
     const auto taskIds = job.getAllTaskIds();
+    const std::unordered_set<core::TaskId> taskIdSet(taskIds.begin(), taskIds.end());
     std::vector<std::pair<core::TaskId, core::TaskId>> dependencies;
     for (const auto& [task, prerequisites] : job.dependencies()) {
+        if (!taskIdSet.contains(task)) {
+            job.setStatus(core::JobStatus::Failed);
+            repository_->updateJob(job);
+            condition_.notify_all();
+            return;
+        }
+
         for (const auto prerequisite : prerequisites) {
+            if (!taskIdSet.contains(prerequisite)) {
+                job.setStatus(core::JobStatus::Failed);
+                repository_->updateJob(job);
+                condition_.notify_all();
+                return;
+            }
+
             dependencies.emplace_back(task, prerequisite);
         }
     }

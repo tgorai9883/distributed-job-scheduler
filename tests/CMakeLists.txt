@@ -17,3 +17,8 @@ add_executable(test_job_scheduler test_job_scheduler.cpp)
 target_link_libraries(test_job_scheduler PRIVATE scheduler_core)
 
 add_test(NAME JobSchedulerTests COMMAND test_job_scheduler)
+
+add_executable(test_failure_cases test_failure_cases.cpp)
+target_link_libraries(test_failure_cases PRIVATE scheduler_core)
+
+add_test(NAME FailureCaseTests COMMAND test_failure_cases)
