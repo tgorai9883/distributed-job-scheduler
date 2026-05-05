@@ -22,3 +22,13 @@ add_executable(test_failure_cases test_failure_cases.cpp)
 target_link_libraries(test_failure_cases PRIVATE scheduler_core)
 
 add_test(NAME FailureCaseTests COMMAND test_failure_cases)
+
+add_executable(test_retry_support test_retry_support.cpp)
+target_link_libraries(test_retry_support PRIVATE scheduler_core)
+
+add_test(NAME RetrySupportTests COMMAND test_retry_support)
+
+add_executable(test_timeout_support test_timeout_support.cpp)
+target_link_libraries(test_timeout_support PRIVATE scheduler_core)
+
+add_test(NAME TimeoutSupportTests COMMAND test_timeout_support)

@@ -14,11 +14,21 @@ ExecutionResult TaskExecutor::execute(core::Task& task)
         task.execute();
 
         const auto finishedAt = std::chrono::steady_clock::now();
+        const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(finishedAt - startedAt);
+        if (task.timeout() > std::chrono::milliseconds{0} && duration > task.timeout()) {
+            return {
+                task.id(),
+                false,
+                "task timed out",
+                duration
+            };
+        }
+
         return {
             task.id(),
             true,
             "",
-            std::chrono::duration_cast<std::chrono::milliseconds>(finishedAt - startedAt)
+            duration
         };
     } catch (const std::exception& exception) {
         const auto finishedAt = std::chrono::steady_clock::now();

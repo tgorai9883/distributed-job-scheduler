@@ -199,6 +199,7 @@ void JobScheduler::handleTaskResult(
     const execution::ExecutionResult& result)
 {
     std::vector<core::TaskId> readyTasks;
+    bool shouldRetry = false;
     bool notify = false;
 
     {
@@ -230,13 +231,23 @@ void JobScheduler::handleTaskResult(
                 notify = true;
             }
         } else {
-            task->setStatus(core::TaskStatus::Failed);
-            job->setStatus(core::JobStatus::Failed);
-            stateIt->second.terminal = true;
-            notify = true;
+            if (task->retryCount() < task->maxRetries()) {
+                task->incrementRetryCount();
+                task->setStatus(core::TaskStatus::Pending);
+                shouldRetry = true;
+            } else {
+                task->setStatus(core::TaskStatus::Failed);
+                job->setStatus(core::JobStatus::Failed);
+                stateIt->second.terminal = true;
+                notify = true;
+            }
         }
 
         repository_->updateJob(*job);
+    }
+
+    if (shouldRetry) {
+        scheduleTask(jobId, taskId);
     }
 
     if (!readyTasks.empty()) {

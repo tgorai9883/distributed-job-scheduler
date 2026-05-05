@@ -4,11 +4,11 @@ A C++20 job scheduler prototype focused on local task execution, dependency orde
 
 ## Features Implemented
 
-- Core `Job` and `Task` models with IDs, names, statuses, retry counters, and task actions.
+- Core `Job` and `Task` models with IDs, names, statuses, retry counters, cooperative timeout metadata, and task actions.
 - In-memory `JobRepository` implementation.
 - Thread-safe `BlockingQueue<T>`.
 - Fixed-size `ThreadPool`.
-- `TaskExecutor` that records success, error message, and execution duration.
+- `TaskExecutor` that records success, error message, execution duration, and reports timeout failures after tasks return.
 - `DependencyGraph` for dependency readiness and cycle detection.
 - `JobScheduler` that runs ready tasks, unlocks dependents, waits for terminal job state, and marks failed jobs.
 - Example programs for independent tasks, dependent tasks, and failure handling.
@@ -80,9 +80,9 @@ Run individual examples after building:
 
 - Execution is local only; there are no worker nodes, RPC, networking, or cluster membership.
 - Storage is in-memory only and is lost when the process exits.
-- Failed tasks fail the whole job immediately.
-- Retry metadata exists on `Task`, but retry scheduling is not implemented yet.
-- No task cancellation, timeout handling, priority scheduling, or persistence.
+- Failed tasks fail the whole job after configured retries are exhausted.
+- Timeout support is cooperative: the scheduler does not forcibly stop a running thread; timeout is detected after the task returns.
+- No task cancellation, hard timeout enforcement, priority scheduling, or persistence.
 - Tests use simple assertion-based executables rather than a full test framework.
 
 ## Future Distributed Design
