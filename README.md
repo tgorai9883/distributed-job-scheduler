@@ -76,12 +76,36 @@ Run individual examples after building:
 ./build/example_failure_handling
 ```
 
+## Benchmarks
+
+Run the simple scheduler benchmark:
+
+```bash
+python3 benchmarks/benchmark_scheduler.py
+```
+
+The benchmark builds `scheduler_app`, runs several local scheduling scenarios with worker counts `1`, `2`, `4`, and `8`, and writes results to:
+
+```text
+benchmarks/results.csv
+```
+
+Current scenarios:
+
+- `independent_100`: 100 independent tasks.
+- `independent_1000`: 1000 independent tasks.
+- `chain_100`: 100 tasks where each task depends on the previous task.
+- `diamond_batch`: one root task, a parallel batch, and one final fan-in task.
+
+Collected columns include scenario, worker count, task count, total completion time in milliseconds, and tasks per second.
+
 ## Current Limitations
 
 - Execution is local only; there are no worker nodes, RPC, networking, or cluster membership.
 - Storage is in-memory only and is lost when the process exits.
 - Failed tasks fail the whole job after configured retries are exhausted.
 - Timeout support is cooperative: the scheduler does not forcibly stop a running thread; timeout is detected after the task returns.
+- Benchmarks use no-op tasks, so they measure local scheduler overhead rather than real workload execution.
 - No task cancellation, hard timeout enforcement, priority scheduling, or persistence.
 - Tests use simple assertion-based executables rather than a full test framework.
 

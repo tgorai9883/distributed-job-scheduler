@@ -1,0 +1,17 @@
+scenario,app_scenario,worker_count,task_count,total_completion_ms,tasks_per_second
+independent_100,independent,1,100,22,4469.96
+independent_100,independent,2,100,21,4614.77
+independent_100,independent,4,100,17,5636.94
+independent_100,independent,8,100,13,7577.22
+independent_1000,independent,1,1000,1173,852.135
+independent_1000,independent,2,1000,1195,836.514
+independent_1000,independent,4,1000,1134,881.824
+independent_1000,independent,8,1000,1236,808.699
+chain_100,chain,1,100,29,3346.38
+chain_100,chain,2,100,28,3533.18
+chain_100,chain,4,100,39,2546.58
+chain_100,chain,8,100,37,2660.19
+diamond_batch,diamond_batch,1,202,101,1994.86
+diamond_batch,diamond_batch,2,202,112,1793.82
+diamond_batch,diamond_batch,4,202,99,2029.09
+diamond_batch,diamond_batch,8,202,105,1914.28
