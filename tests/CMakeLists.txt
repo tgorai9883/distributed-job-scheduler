@@ -32,3 +32,13 @@ add_executable(test_timeout_support test_timeout_support.cpp)
 target_link_libraries(test_timeout_support PRIVATE scheduler_core)
 
 add_test(NAME TimeoutSupportTests COMMAND test_timeout_support)
+
+add_executable(test_worker_registry test_worker_registry.cpp)
+target_link_libraries(test_worker_registry PRIVATE scheduler_core)
+
+add_test(NAME WorkerRegistryTests COMMAND test_worker_registry)
+
+add_executable(test_distributed_assignment test_distributed_assignment.cpp)
+target_link_libraries(test_distributed_assignment PRIVATE scheduler_core)
+
+add_test(NAME DistributedAssignmentTests COMMAND test_distributed_assignment)
